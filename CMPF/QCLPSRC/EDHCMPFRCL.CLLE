@@ -1,0 +1,201 @@
+     /*%CSTD===========================================================*      */
+     /** Application. : TWDEMO     Demo Arcad - TimwareLight           *      */
+     /** Component. . : EDHCMPFRCL                    Type: CLLE       *      */
+     /**===============================================================*      */
+     /** Sub-system . :                                                *      */
+     /** Function . . :                                                *      */
+     /** Sub-function :                                                *      */
+     /**%S=============================================================*      */
+     /** Description of functions:                                     *      */
+     /**                                                               *      */
+     /**                                                               *      */
+     /**                                                               *      */
+     /**%E=============================================================*      */
+     /** AUTHOR:                          00:00                        *      */
+     /** MODIFS: 01 PABLO      11/23/2022 12:25  01.00.02 MR 22/    2  *      */
+     /**           CAMBIO A CIFRAS DE CONTROL                          *      */
+     /*%ECSTD==========================================================*      */
+             PGM        PARM(&OBJ &LIB &IPDRP &FILEATR &PRINT)
+
+/* DECLARACIÓN DE VARIABLES *****************************************/
+             DCL        VAR(&OBJ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&IPDRP) TYPE(*CHAR) LEN(15)
+             DCL        VAR(&RMTCMD) TYPE(*CHAR) LEN(107)
+             DCL        VAR(&ACTRC) TYPE(*LGL) LEN(1) VALUE('0')
+             DCL        VAR(&CUENTA) TYPE(*DEC) LEN(2) VALUE(1)
+             DCL        VAR(&OBJSS) TYPE(*CHAR) LEN(1)
+             DCL        VAR(&CMPF) TYPE(*CHAR) LEN(5)
+             DCL        VAR(&FILEATR) TYPE(*CHAR) LEN(2)
+             DCL        VAR(&CMPFLO) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&EDHCMPF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CMPFDRP) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&CMPFPRD) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&FILES) TYPE(*CHAR) LEN(7)
+             DCL        VAR(&PRINT) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&mail) TYPE(*CHAR) LEN(40)
+
+/* MONITOREAR MENSAJES DE POSIBLES ERRORES **************************/
+             MONMSG     MSGID(CPF2103 CPF2105 CPA0702 CPF3309 +
+                          CPF3303 CPF9801)
+
+/* CAMBIAR LAS VARIABLES CON NOMBRES DE OBJETOS *********************/
+             CHGVAR     VAR(&CMPF) VALUE('CMP' *CAT &FILEATR)
+             CHGVAR     VAR(&EDHCMPF) VALUE('EDH' *CAT &CMPF)
+             CHGVAR     VAR(&CMPFLO) VALUE(&EDHCMPF *TCAT 'LO')
+             CHGVAR     VAR(&CMPFDRP) VALUE(&CMPF *TCAT 'DRP')
+             CHGVAR     VAR(&CMPFPRD) VALUE(&CMPF *TCAT 'PRD')
+             IF         COND(&CMPF = CMPF) THEN(CHGVAR VAR(&FILES) +
+                          VALUE('*PF *LF'))
+             IF         COND(&CMPF = CMPLF) THEN(CHGVAR VAR(&FILES) +
+                          VALUE('*LF'))
+             IF         COND(&CMPF = CMPPF) THEN(CHGVAR VAR(&FILES) +
+                          VALUE('*PF'))
+/* ELIMINAR ARCHIVOS ANTERIORES *************************************/
+             DLTF       FILE(PMEDHUSR/&CMPFPRD)
+             DLTF       FILE(PMEDHUSR/&CMPFDRP)
+
+/* ANALIZAR SI EXISTE LA BIBLIOTECA SELECCIONADA ********************/
+             IF         COND(&LIB *EQ '*LIBL     ') THEN(GOTO CMPOBJ)
+             IF         COND(&LIB *EQ '*CURLIB   ') THEN(GOTO CMPOBJ)
+             IF         COND(&LIB *EQ '*USRLIBL  ') THEN(GOTO CMPOBJ)
+             IF         COND(&LIB *EQ '*ALLUSR   ') THEN(GOTO CMPOBJ)
+             IF         COND(&LIB *EQ '*ALL      ') THEN(GOTO CMPOBJ)
+             CHKOBJ     OBJ(QSYS/&LIB) OBJTYPE(*LIB)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             GOTO       CMDLBL(END_PGM)
+             ENDDO
+
+/* ANALIZAR SI EXISTE EL OBJETO SELECCIONADO ************************/
+ CMPOBJ:     IF         COND(&OBJ *EQ '*ALL') THEN(GOTO INICIO)
+             IF         COND(&CUENTA *LT 11) THEN(DO)
+               CHGVAR     VAR(&OBJSS) VALUE(%SUBSTRING(&OBJ &CUENTA 1))
+               IF         COND(&OBJSS *EQ '*') THEN(GOTO INICIO)
+               CHGVAR     VAR(&CUENTA) VALUE(&CUENTA + 1)
+               GOTO       CMDLBL(CMPOBJ)
+             ENDDO
+
+             CHKOBJ     OBJ(QSYS/&OBJ) OBJTYPE(*FILE)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+             SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('No se +
+                          ha encontrado el archivo ' || &OBJ |< ' +
+                          en la biblioteca ' || &LIB) MSGTYPE(*DIAG)
+             GOTO       CMDLBL(END_PGM)
+             ENDDO
+
+ /* RECUPERAR INFORMACIÓN DE ARCHIVOS EN PRODUCCIÓN ******************/
+ INICIO:
+             IF         COND(&CMPF = CMPF) THEN(DO)
+               SBMJOB     CMD(DSPFD FILE(&LIB/&OBJ) TYPE(*MBR) +
+                            OUTPUT(*OUTFILE) FILEATR(*PF *LF) +
+                            OUTFILE(PMEDHUSR/&CMPFPRD)) JOB(&CMPFPRD) +
+                            JOBQ(PMEDHUSR/PMEDH)
+             ENDDO
+             ELSE       CMD(SBMJOB     CMD(DSPFD FILE(&LIB/&OBJ) TYPE(*MBR) +
+                                         OUTPUT(*OUTFILE) FILEATR(&FILES) +
+                                         OUTFILE(PMEDHUSR/&CMPFPRD)) +
+                                         JOB(&CMPFPRD) JOBQ(PMEDHUSR/PMEDH))
+
+
+/* RECUPERAR INFORMACIÓN DE ARCHIVOS EN CONTINGENCIA ****************/
+             IF         COND(&CMPF = CMPF) THEN(DO)
+             CHGVAR     VAR(&RMTCMD) VALUE('DSPFD FILE(' *CAT &LIB +
+                          *TCAT '/' *CAT &OBJ *TCAT ') TYPE(*MBR) +
+                          OUTPUT(*OUTFILE) FILEATR(*PF *LF) +
+                          OUTFILE(PMEDHUSR/' *CAT &CMPFDRP *TCAT ')')
+             ENDDO
+             CHGVAR     VAR(&RMTCMD) VALUE('DSPFD FILE(' *CAT &LIB *TCAT +
+                          '/' *CAT &OBJ *TCAT ') TYPE(*MBR) OUTPUT(*OUTFILE) +
+                          FILEATR(' *CAT &FILES  *TCAT +
+                          ') OUTFILE(PMEDHUSR/' *CAT &CMPFDRP *TCAT ')')
+
+
+             RUNRMTCMD  CMD(&RMTCMD) RMTLOCNAME(&IPDRP *IP) +
+                          RMTUSER(PMSOFTICF) RMTPWD(PMSOFTICF)
+
+ /* RUTINA PARA HABILITAR TCPSVR *REXEC EN CONTINGENCIA **************/
+             MONMSG     MSGID(CPF91CC) EXEC(DO)
+               CHGVAR     VAR(&ACTRC) VALUE('1')
+               OVRDBF     FILE(INPUT) TOFILE(PMEDHUSR/EDHCMPFFTP) +
+                            MBR(ACTRMTCMD)
+               ADDPFM     FILE(PMEDHUSR/EDHCMPFFTP) MBR(RESACTRC)
+               MONMSG     MSGID(CPF0000)
+               OVRDBF     FILE(OUTPUT) TOFILE(PMEDHUSR/EDHCMPFFTP) +
+                            MBR(RESACTRC)
+               FTP        RMTSYS(&IPDRP)
+             DLYJOB     DLY(2)
+             RUNRMTCMD  CMD(&RMTCMD) RMTLOCNAME(&IPDRP *IP) +
+                          RMTUSER(PMSOFTICF) RMTPWD(PMSOFTICF)
+             MONMSG     MSGID(CPF91CC) EXEC(DO)
+               SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('No se +
+                            ha podido conectar con el sistema ' || +
+                            &IPDRP) MSGTYPE(*DIAG)
+               GOTO       CMDLBL(END_PGM)
+               ENDDO
+             ENDDO
+
+ /* CREACIÓN DE SAVF PARA TRANSFERENCIA DE INFORMACIÓN ***************/
+             CRTSAVF    FILE(QTEMP/PASO)
+             MONMSG     MSGID(CPF7302) EXEC(CLRSAVF FILE(QTEMP/PASO))
+
+ /* TRANSFERENCIA DE INFORMACIÓN VÍA FTP *****************************/
+             OVRDBF     FILE(INPUT) TOFILE(PMEDHUSR/EDHCMPFFTP) +
+                          MBR(SNDFILE)
+             ADDPFM     FILE(PMEDHUSR/EDHCMPFFTP) MBR(RESSENT)
+             MONMSG     MSGID(CPF0000)
+             OVRDBF     FILE(OUTPUT) TOFILE(PMEDHUSR/EDHCMPFFTP) +
+                          MBR(RESSENT)
+             FTP        RMTSYS(&IPDRP)
+
+/* BORRADO DE ARCHIVO EN SISTEMA DE CONTINGENCIA ********************/
+     /*      RUNRMTCMD  CMD('DLTF FILE(PMEDHUSR/CMP*)') +
+                          RMTLOCNAME(&IPDRP *IP) RMTUSER(PMSOFTICF) +
+                          RMTPWD(PMSOFTICF)         */
+
+ /* RUTINA PARA DESHABILITAR EL TCPSVR *REXEC ************************/
+             IF         (&ACTRC = '1') THEN(DO)
+               OVRDBF     FILE(INPUT) TOFILE(PMEDHUSR/EDHCMPFFTP) +
+                            MBR(DISRMTCMD)
+               ADDPFM     FILE(PMEDHUSR/EDHCMPFFTP) MBR(RESDISRC)
+               MONMSG     MSGID(CPF0000)
+               OVRDBF     FILE(OUTPUT) TOFILE(PMEDHUSR/EDHCMPFFTP) +
+                            MBR(RESDISRC)
+               FTP        RMTSYS(&IPDRP)
+             ENDDO
+
+ /* RESTAURAR INFORMACIÓN SOBRE LOS ARCHIVOS DE CONTINGENCIA**********/
+             RSTOBJ     OBJ(&CMPFDRP) SAVLIB(PMEDHUSR) DEV(*SAVF) +
+                          SAVF(QTEMP/PASO)
+             MONMSG     MSGID(CPF3707) EXEC(DO)
+               SNDPGMMSG  MSGID(CPF9898) MSGF(QCPFMSG) MSGDTA('No +
+                            existe la biblioteca ' || &LIB |< ' o el +
+                            objeto ' || &OBJ |< ' en el sistema de +
+                            contingencia') MSGTYPE(*DIAG)
+             ENDDO
+
+/*  GRABAR INFORMACIÓN RECUPERADA EN DTAARA'S ************************/
+ CHKOBJ:     CHKOBJ     OBJ(PMEDHUSR/&CMPFPRD) OBJTYPE(*FILE) +
+                          MBR(*FIRST)
+             MONMSG     MSGID(CPF0000) EXEC(GOTO CHKOBJ)
+
+
+             CRTDTAARA  DTAARA(PMEDHUSR/&CMPFLO) TYPE(*CHAR) +
+                          LEN(20) VALUE(&LIB || &OBJ) TEXT('dtaara +
+                          para comparar archivos CMPF')
+             MONMSG     MSGID(CPF1023) EXEC(CHGDTAARA +
+                          DTAARA(PMEDHUSR/&CMPFLO) VALUE(&lib || +
+                          &obj))
+
+/* GENERAR ARCHIVO DE CANTIDAD ED OBJETOS EN AMBOS SISTEMAS *********/
+             DLTF       FILE(PMEDHUSR/CMPFCO)
+             DSPFD      FILE(PMEDHUSR/&CMPFPRD) TYPE(*MBR) +
+                          OUTPUT(*OUTFILE) FILEATR(*PF) +
+                          OUTFILE(PMEDHUSR/CMPFCO)
+             DSPFD      FILE(PMEDHUSR/&CMPFDRP) TYPE(*MBR) +
+                          OUTPUT(*OUTFILE) FILEATR(*PF) +
+                          OUTFILE(PMEDHUSR/CMPFCO) OUTMBR(*FIRST +
+                          *ADD)
+
+             CALL       PGM(&EDHCMPF) PARM(&OBJ &LIB &PRINT &mail)
+END_PGM:
+     ENDPGM

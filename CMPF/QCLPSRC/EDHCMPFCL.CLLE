@@ -1,0 +1,41 @@
+             PGM        PARM(&FILEATR &PRINT)
+
+             DCL        VAR(&OBJ) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&LIB) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&FILEATR) TYPE(*CHAR) LEN(2)
+             DCL        VAR(&CMPF) TYPE(*CHAR) LEN(5)
+             DCL        VAR(&CMPFLO) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&EDHCMPF) TYPE(*CHAR) LEN(10)
+             DCL        VAR(&CMPFDRP) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&CMPFPRD) TYPE(*CHAR) LEN(8)
+             DCL        VAR(&PRINT) TYPE(*CHAR) LEN(6)
+             DCL        VAR(&mail) TYPE(*CHAR) LEN(40)
+
+/* MONITOREAR MENSAJES DE POSIBLES ERRORES **************************/
+             MONMSG     MSGID(CPF2103 CPF2105 CPA0702 CPF3309 CPF3303)
+
+             ADDLIBLE   LIB(PMEDHUSR)
+
+
+             CHGVAR     VAR(&CMPF) VALUE('CMP' *CAT &FILEATR)
+             CHGVAR     VAR(&EDHCMPF) VALUE('EDH' *CAT &CMPF)
+             CHGVAR     VAR(&CMPFLO) VALUE(&EDHCMPF *TCAT 'LO')
+             CHGVAR     VAR(&CMPFDRP) VALUE(&CMPF *TCAT 'DRP')
+             CHGVAR     VAR(&CMPFPRD) VALUE(&CMPF *TCAT 'PRD')
+
+             RTVDTAARA  DTAARA(PMEDHUSR/&CMPFLO (1 10)) RTNVAR(&LIB)
+             RTVDTAARA  DTAARA(PMEDHUSR/&CMPFLO (11 10)) RTNVAR(&OBJ)
+/* GENERAR ARCHIVO DE CANTIDAD ED OBJETOS EN AMBOS SISTEMAS *********/
+/*          DLTF       FILE(PMEDHUSR/CMPFCO)                        */
+             DSPFD      FILE(PMEDHUSR/&CMPFPRD) TYPE(*MBR) +
+                          OUTPUT(*OUTFILE) FILEATR(*PF) +
+                          OUTFILE(PMEDHUSR/CMPFCO)
+             DSPFD      FILE(PMEDHUSR/&CMPFDRP) TYPE(*MBR) +
+                          OUTPUT(*OUTFILE) FILEATR(*PF) +
+                          OUTFILE(PMEDHUSR/CMPFCO) OUTMBR(*FIRST +
+                          *ADD)
+
+
+             CALL       PGM(&EDHCMPF) PARM(&OBJ &LIB &PRINT &mail)
+END_PGM:
+ENDPGM

@@ -1,0 +1,163 @@
+      *%CSTD===========================================================*
+      ** Application. : TWDEMO     Demo Arcad - TimwareLight           *
+      ** Component. . : EDHCMPFW                      Type: DSPF       *
+      **===============================================================*
+      ** Sub-system . :                                                *
+      ** Function . . :                                                *
+      ** Sub-function :                                                *
+      **%S=============================================================*
+      ** Description of functions:                                     *
+      **                                                               *
+      **                                                               *
+      **                                                               *
+      **%E=============================================================*
+      ** AUTHOR:                          00:00                        *
+      ** MODIFS: 03 PABLO      11/23/2022 13:40  01.00.04 MR 22/    4  *
+      **           Aceptar usuarios con Q*                             *
+      **         02 PABLO      11/23/2022 12:46  01.00.03 MR 22/    2  *
+      **           CAMBIO A CIFRAS DE CONTROL                          *
+      **         01 PABLO      11/20/2022 16:59  01.00.01 MR 22/    2  *
+      *%ECSTD==========================================================*
+     A*%%TS  SD  20221123  133939  PABLO       REL-V7R2M0  5770-WDS
+     A*%%EC
+     A                                      DSPSIZ(27 132 *DS4)
+     A                                      ERRSFL
+     A          R SFL                       SFL
+     A*%%TS  SD  20221117  130753  PABLO       REL-V7R2M0  5770-WDS
+     A            CMBNRCD       10A  O 10 91
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            OK             2   O 10124
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            RECNUMBER      4Y 0O 10  4EDTCDE(Z)
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            PMBLIB    R        O 10 13REFFLD(QWHFDMBR/MBLIB PMEDHUSR/CMPF-
+     A                                      PRD)
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            PMBFILE   R        O 10 24REFFLD(QWHFDMBR/MBFILE PMEDHUSR/CMP-
+     A                                      FPRD)
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            PMBNAME   R        O 10 35REFFLD(QWHFDMBR/MBNAME PMEDHUSR/CMP-
+     A                                      FPRD)
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            PMBFATR   R        O 10 46REFFLD(QWHFDMBR/MBFATR PMEDHUSR/CMP-
+     A                                      FPRD)
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            PMBNRCD       10A  O 10 57
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A                                 10  2'|'
+     A                                 10  9'|'
+     A                                 10122'|'
+     A                                 10127'|'
+     A            CMBNDTR       10A  O 10106
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A            PMBNDTR       10A  O 10 72
+     A  70                                  COLOR(RED)
+     A  71                                  COLOR(YLW)
+     A                                 10 86'|'
+     A                                 10 53'|'
+     A          R CTL                       SFLCTL(SFL)
+     A*%%TS  SD  20221123  133939  PABLO       REL-V7R2M0  5770-WDS
+     A                                      SFLSIZ(0016)
+     A                                      SFLPAG(0012)
+     A                                      CF12(12)
+     A                                      CF22(22)
+     A                                      OVERLAY
+     A  30                                  SFLDSP
+     A  30                                  SFLDSPCTL
+     A N30                                  SFLCLR
+     A  31                                  SFLEND(*MORE)
+     A                                  1120SYSNAME
+     A                                  2120DATE
+     A                                      EDTCDE(Y)
+     A                                  3120TIME
+     A                                  4  2'ARCHIVO   :'
+     A                                  5  2'BIBLIOTECA:'
+     A            OBJ           10A  O  4 14DSPATR(HI)
+     A            LIB           10A  O  5 14DSPATR(HI)
+     A                                  1  3'Timware        '
+     A                                  9124'OK'
+     A                                      COLOR(TRQ)
+     A                                      DSPATR(UL)
+     A                                  7  2'| Sec  |                          -
+     A                                                       |    Producción:'
+     A                                      DSPATR(UL)
+     A            PMBSYSN   R        O  7 70REFFLD(QWHFDMBR/MBSYSN PMEDHUSR/CMP-
+     A                                      FPRD)
+     A                                      DSPATR(UL)
+     A                                      DSPATR(HI)
+     A                                  7 79'       |     Contingencia: '
+     A                                      DSPATR(UL)
+     A                                  7116'      |    |'
+     A                                      DSPATR(UL)
+     A            CMBSYSN   R        O  7107REFFLD(QWHFDMBR/MBSYSN PMEDHUSR/CMP-
+     A                                      FPRD)
+     A                                      DSPATR(UL)
+     A                                      DSPATR(HI)
+     A                                  7107'               |    |'
+     A                                      DSPATR(UL)
+     A                                  9 12' Biblioteca Archivo    Miembro    -
+     A                                      Tipo  '
+     A                                      DSPATR(UL)
+     A                                      COLOR(TRQ)
+     A                                  8  2'|'
+     A                                  8  9'|'
+     A                                  9  2'|'
+     A                                  9  9'|'
+     A                                  8122'|'
+     A                                  9122'|'
+     A                                  6  2'__________________________________-
+     A                                      ___________________________________-
+     A                                      ___________________________________-
+     A                                      ______________________'
+     A                                  8127'|'
+     A                                  9127'|'
+     A                                  1 52' COMPARACIÓN DE ARCHIVOS '
+     A                                  3 54'D I F E R E N C I A S'
+     A                                      COLOR(BLU)
+     A            MBNRCDPRD R        O  8 73REFFLD(QWHFDMBR/MBNRCD PMEDHUSR/CMP-
+     A                                      PFPRD)
+     A                                      DSPATR(RI)
+     A                                      EDTCDE(Z)
+     A            MBNRCDDRP R        O  8107REFFLD(QWHFDMBR/MBNRCD PMEDHUSR/CMP-
+     A                                      FPRD)
+     A                                      DSPATR(RI)
+     A                                      EDTCDE(Z)
+     A                                  3 90'Recuperación de datos'
+     A                                  4 90'  FECHA:    HORA:    '
+     A            FECHAREC  R        O  5 92REFFLD(QWHFDMBR/MBFCDT PMEDHUSR/CMP-
+     A                                      FCO)
+     A                                      COLOR(BLU)
+     A            HORAREC   R        O  5102REFFLD(QWHFDMBR/MBFCTM PMEDHUSR/CMP-
+     A                                      FCO)
+     A                                      COLOR(BLU)
+     A                                  2  3'V_221123'
+     A                                  8 92'Ñ Archivos:'
+     A                                  8 58'Ñ Archivos:'
+     A                                  8 53'|'
+     A                                  9 56' Ñ Reg Actu     Ñ Reg Borr '
+     A                                      DSPATR(UL)
+     A                                      COLOR(TRQ)
+     A                                  9 53'|'
+     A                                  9 86'|'
+     A                                  9 90' Ñ Reg Actu     Ñ Reg Borr '
+     A                                      COLOR(TRQ)
+     A                                      DSPATR(UL)
+     A                                  8 86'|'
+     A                                  2 52'_________________________'
+     A          R FOOT
+     A*%%TS  SD  20221117  174459  PABLO       REL-V7R2M0  5770-WDS
+     A                                      CLRL(*NO)
+     A                                      OVERLAY
+     A                                 23  2'F12=Salir'
+     A                                      COLOR(BLU)
+     A                                 23 20'F22=Imprimir'
+     A                                      COLOR(BLU)

@@ -1,0 +1,141 @@
+     A*%%TS  SD  20230111  115352  EMILIANO    REL-V7R2M0  5770-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      REF(*LIBL/MAECLIL1)
+     A                                      CHGINPDFT(CS)
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A                                      INDARA
+     A          R HDRSCN
+     A*%%TS  SD  20230111  115352  EMILIANO    REL-V7R2M0  5770-WDS
+     A                                      TEXT('SOLICITAR NÚMERO CLIE')
+     A                                      CA03(03 'FINAL DE MANTENIMIENTO')
+     A                                      CF05(05 'MODO ADICIÓN')
+     A                                      CF06(06 'MODO ACTUALIZACIÓN')
+     A                                      CF07(07 'MODO SUPRESIÓN')
+     A                                      CF08(08 'MODO VISUALIZACIÓN')
+     A            MODALIDAD      8A  O  4 49DSPATR(HI)
+     A                                  4 28'Modalidad'
+     A                                      DSPATR(HI)
+     A                                  2  4TIME
+     A                                      DSPATR(HI)
+     A                                  2 28'Mantenimiento Archivo Cliente'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(RI)
+     A                                  2 73DATE
+     A                                      EDTCDE(Y)
+     A                                      DSPATR(HI)
+     A            CLIE      R     Y  I 10 50REFFLD(CLIE)
+     A                                      DSPATR(CS)
+     A                                      CHECK(RZ)
+     A                                      DSPATR(UL)
+     A  51                                  ERRMSG('Num. cliente ya existe' 51)
+     A  52                                  ERRMSG('Num. cliente no encontrado'-
+     A                                       52)
+     A  53                                  ERRMSG('Introducir num. cliente' 53)
+     A                                 10 27'Número de Cliente===>'
+     A                                      DSPATR(HI)
+     A                                 23  1'F3=Finalizar'
+     A                                 23 18'F5=Añadir'
+     A                                 23 32'F6=Actualizar'
+     A                                 23 50'F7=Suprimir'
+     A                                 23 66'F8=Visualizar'
+     A                                  8 20'                                  -
+     A                                              '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 11 20' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                  9 20' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 10 20' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 12 20'                                  -
+     A                                              '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                  9 61' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 10 61' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 11 61' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A          R CSTINQ
+     A*%%TS  SD  20220713  155733  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      TEXT('VISUALIZAR INFO CLIE')
+     A                                      CA12(12 'PANTALLA ANTERIOR')
+     A            MODALIDAD      8A  O  4 49DSPATR(HI)
+     A                                  4 28'Modalidad'
+     A                                      DSPATR(HI)
+     A                                  2  1TIME
+     A                                      DSPATR(HI)
+     A                                  2 28'Mantenimiento Archivo Cliente'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(RI)
+     A                                  2 73DATE
+     A                                      EDTCDE(Y)
+     A                                      DSPATR(HI)
+     A                                  7  9'Cliente:'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A            CLIE      R        O  7 22DSPATR(HI)
+     A                                      COLOR(RED)
+     A            NOMB      R        B  9 27DSPATR(CS)
+     A  04                                  DSPATR(PR)
+     A            DIRE1     R        B 11 27DSPATR(CS)
+     A  04                                  DSPATR(PR)
+     A            DIRE2     R        B 13 27DSPATR(CS)
+     A  04                                  DSPATR(PR)
+     A            CDAD      R        B 15 27DSPATR(CS)
+     A  04                                  DSPATR(PR)
+     A            PROV      R        B 17 27DSPATR(CS)
+     A  04                                  DSPATR(PR)
+     A            CDP       R        B 17 42DSPATR(CS)
+     A                                      EDTCDE(Z)
+     A  04                                  DSPATR(PR)
+     A                                 23  1'F12=Cancelar'
+     A          R CSTBLD
+     A*%%TS  SD  20220713  155733  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      TEXT('AÑADIR REGISTRO CLIE')
+     A                                      CA12(12 'PANTALLA ANTERIOR')
+     A            MODALIDAD      8A  O  4 49DSPATR(HI)
+     A                                  4 28'Modalidad'
+     A                                      DSPATR(HI)
+     A                                  2  1TIME
+     A                                      DSPATR(HI)
+     A                                  2 28'MANTENIMIENTO ARCHIVO CLIENTE'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(RI)
+     A                                  2 73DATE
+     A                                      EDTCDE(Y)
+     A                                      DSPATR(HI)
+     A                                  7 10'Cliente:'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A            CLIE      R        O  7 22DSPATR(HI)
+     A                                  9 22'Nombre'
+     A                                      DSPATR(HI)
+     A                                 11 22'Dirección'
+     A                                      DSPATR(HI)
+     A            DIRE1     R        I 11 34
+     A                                 13 22'Dirección'
+     A                                      DSPATR(HI)
+     A            DIRE2     R        I 13 34
+     A                                 15 22'Ciudad'
+     A                                      DSPATR(HI)
+     A            CDAD      R        I 15 34
+     A                                 17 22'Provincia'
+     A                                      DSPATR(HI)
+     A            PROV      R        I 17 34
+     A                                 17 43'C.P.'
+     A                                      DSPATR(HI)
+     A            CDP       R     Y  I 17 49
+     A                                 23  1'F12=Cancelar'
+     A            NOMB      R        I  9 34
+     A  54                                  ERRMSG('Introducir nombre del clien-
+     A                                      te' 54)

@@ -1,0 +1,9 @@
+     A          R REGCLIE
+     A            CLIE           5  0       TEXT('Número cliente')
+     A            NOMB          20          TEXT('Nombre cliente')
+     A            DIRE1         20          TEXT('Dirección cliente')
+     A            DIRE2         20          TEXT('Dirección cliente')
+     A            CDAD          20          TEXT('Ciudad cliente')
+     A            PROV           2          TEXT('Provincia cliente')
+     A            CDP            5  0       TEXT('Codigo postal cliente')
+     A            SALDO         10  2       TEXT('Saldo del debe')

@@ -1,0 +1,39 @@
+     A*%%TS  SD  20230113  113313  EMILIANO    REL-V7R2M0  5770-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CHGINPDFT(CS)
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A                                      INDARA
+     A          R HDRSCN
+     A*%%TS  SD  20230113  113313  EMILIANO    REL-V7R2M0  5770-WDS
+     A                                      CA03(03 'FINAL DE CONSULTA')
+     A                                      CA05(05 'MODO DE MANTENIMIENTO')
+     A                                      CA06(06 'BUSQUEDA DE MODO CODIGO PO-
+     A                                      STAL')
+     A                                      CA07(07 'BUSQUEDA DE MODE NOMBRE')
+     A                                  2  4TIME
+     A                                      DSPATR(HI)
+     A                                  2 29'Consulta Principal de Clientes'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(RI)
+     A                                  2 70DATE
+     A                                      EDTCDE(Y)
+     A                                      DSPATR(HI)
+     A                                  7 13'Funciones Disponibles'
+     A                                      DSPATR(HI)
+     A                                      COLOR(YLW)
+     A                                 10 25'F3 - Finalizar trabajo'
+     A                                      COLOR(BLU)
+     A                                 12 25'F5 - Mantener archivo de cliente'
+     A                                      COLOR(BLU)
+     A                                 14 25'F6 - Buscar cliente por CP'
+     A                                      COLOR(BLU)
+     A                                 16 25'F7 - Buscar cliente por nombre'
+     A                                      COLOR(BLU)
+     A                                 23  5'Usuario:'
+     A                                      DSPATR(HI)
+     A                                 23 15USER
+     A                                      COLOR(RED)
+     A                                      DSPATR(HI)
+     A                                      DSPATR(RI)
+     A                                 23 70SYSNAME

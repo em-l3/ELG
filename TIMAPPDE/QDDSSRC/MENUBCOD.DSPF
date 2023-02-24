@@ -1,0 +1,109 @@
+     A*%%TS  SD  20210127  164833  ALBERTO     REL-V7R2M0  5770-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      REF(MAECLIL2)
+     A                                      CHGINPDFT(CS)
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A                                      INDARA
+     A                                      CA03(03 'FINAL DE TRABAJO')
+     A          R CABECERA
+     A*%%TS  SD  20200723  164413  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      OVERLAY
+     A                                  2  4TIME
+     A                                      DSPATR(HI)
+     A                                  2 22'Busqueda de Cliente por Código Pos-
+     A                                      tal'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(RI)
+     A                                  2 70DATE
+     A                                      EDTCDE(Y)
+     A                                      DSPATR(HI)
+     A          R PIE1
+     A*%%TS  SD  20210127  164833  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                 22  2'Intro=Continuar'
+     A                                 22 23'F3=Finalizar'
+     A          R PIE2
+     A*%%TS  SD  20210127  164833  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                 22  1'Intro=Continuar'
+     A                                 22 20'F3=Finalizar'
+     A                                 22 36'F4=Inicio lista'
+     A          R SOLICIT
+     A*%%TS  SD  20200723  164413  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      OVERLAY
+     A                                 10 31'Teclee Código Postal'
+     A                                      DSPATR(HI)
+     A            CDP       R     Y  I 13 38DSPATR(CS)
+     A                                      CHECK(RZ)
+     A  61                                  ERRMSG('NO ENCONTRADO CÓD POSTAL' 6-
+     A                                      1)
+     A                                 16 29'                        '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                  8 29'                        '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 10 29' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 15 29' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                  9 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 10 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                  9 29' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 12 29' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 11 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 15 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 11 29' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 13 29' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 14 29' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 12 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 13 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 14 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A          R SUBARCH                   SFL
+     A*%%TS  SD  20200723  164413  ALBERTO     REL-V7R2M0  5770-WDS
+     A            NOMB      R        O  9 18
+     A            SALDO     R        O  9 50EDTCDE(J)
+     A          R SUBCTL                    SFLCTL(SUBARCH)
+     A*%%TS  SD  20200723  164413  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      SFLSIZ(0013)
+     A                                      SFLPAG(0013)
+     A                                      ROLLUP(95 'GIRO ARRIBA')
+     A                                      CA04(04 'REARRANCAR CÓDIGO POSTAL')
+     A                                      OVERLAY
+     A N55                                  SFLDSP
+     A N55                                  SFLDSPCTL
+     A  55                                  SFLCLR
+     A                                  4  5'Cliente con C.P.'
+     A            CDP       R        O  4 24DSPATR(HI)
+     A                                      COLOR(RED)
+     A                                  7 17'    Nombre Cliente    '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  7 49'   Saldo C/D    '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)

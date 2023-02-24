@@ -1,0 +1,133 @@
+     A*%%TS  SD  20210127  165342  ALBERTO     REL-V7R2M0  5770-WDS
+     A*%%EC
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      REF(*LIBL/MAECLIL3)
+     A                                      CHGINPDFT(CS)
+     A                                      PRINT(*LIBL/QSYSPRT)
+     A                                      INDARA
+     A                                      CA03(03 'FINAL DE TRABAJO')
+     A          R HEAD
+     A*%%TS  SD  20210127  165342  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      OVERLAY
+     A                                  2  1TIME
+     A                                      DSPATR(HI)
+     A                                  2 31'Búsqueda Por Nombre'
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  2 73DATE
+     A                                      EDTCDE(Y)
+     A                                      DSPATR(HI)
+     A          R PIE1
+     A*%%TS  SD  20200723  172456  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                 23  6'Intro - Continuar'
+     A                                      DSPATR(HI)
+     A                                 23 29'F3 - Finalizar'
+     A                                      DSPATR(HI)
+     A          R PIE2
+     A*%%TS  SD  20200723  172456  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                 23  4'Intro - Continuar'
+     A                                      DSPATR(HI)
+     A                                 23 34'F3 - Finalizar'
+     A                                      DSPATR(HI)
+     A                                 23 60'F4 - Inicio Lista'
+     A                                      DSPATR(HI)
+     A          R SOLICIT
+     A*%%TS  SD  20200724  124200  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      OVERLAY
+     A                                 11 28'Teclear Nombre a Buscar'
+     A                                      DSPATR(HI)
+     A            SRCNAM    R        I 13 30REFFLD(NOMB MAECLIL3)
+     A                                      DSPATR(CS)
+     A  52                                  ERRMSG('CLIENTE NO EXISTE' 52)
+     A                                  9 26'                           '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 15 26'                           '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 11 26' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 10 26' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 12 26' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 13 26' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 14 26' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 10 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 11 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 12 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 13 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A                                 14 52' '
+     A                                      DSPATR(RI)
+     A                                      COLOR(YLW)
+     A          R SUBARCH                   SFL
+     A*%%TS  SD  20200723  172456  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      CHANGE(99 'CAMPO MODIFICADO')
+     A            SEL            1A  B  9 10DSPATR(CS)
+     A                                      VALUES(' ' 'X')
+     A            CDP       R        O  9 61
+     A            CLIE      R        O  9 48
+     A            NOMB      R        O  9 18
+     A          R SUBCTL                    SFLCTL(SUBARCH)
+     A*%%TS  SD  20200723  172456  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      SFLSIZ(0013)
+     A                                      SFLPAG(0013)
+     A  55                                  SFLCLR
+     A N55                                  SFLDSPCTL
+     A N55                                  SFLDSP
+     A                                      ROLLUP(95 'GIRO ARRIBA')
+     A                                      OVERLAY
+     A                                      CF04(04 'REARRANCAR NOMBRE''BUSQUED-
+     A                                      A')
+     A                                  5  4'Nombre Buscado'
+     A            SRCNAM    R        O  5 21REFFLD(NOMB MAECLIL3)
+     A                                      DSPATR(HI)
+     A                                      COLOR(RED)
+     A                                  7  6'Seleccionar'
+     A                                      DSPATR(HI)
+     A                                  8  8' "X" '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8 46' NumCte '
+     A                                      DSPATR(HI)
+     A                                      DSPATR(UL)
+     A                                  8 17'    Nombre Cliente    '
+     A                                      DSPATR(UL)
+     A                                      DSPATR(HI)
+     A                                  8 60'  C.P  '
+     A                                      DSPATR(UL)
+     A                                      DSPATR(HI)
+     A          R CUSDSP
+     A*%%TS  SD  20200723  172456  ALBERTO     REL-V7R2M0  5770-WDS
+     A                                      OVERLAY
+     A                                  6 25'Cliente'
+     A            CLIE           5S 0O  6 35DSPATR(HI)
+     A                                  8 25'Nombre'
+     A            NOMB          20A  O  8 35DSPATR(HI)
+     A                                 10 25'Dirección'
+     A            DIRE1         20A  O 10 35DSPATR(HI)
+     A            DIRE2         20A  O 11 35DSPATR(HI)
+     A                                 13 25'Ciudad'
+     A            CDAD          20A  O 13 35DSPATR(HI)
+     A                                 15 25'Provincia'
+     A            PROV           2A  O 15 35DSPATR(HI)
+     A                                 15 43'C.P.'
+     A            CDP            5S 0O 15 50DSPATR(HI)
+     A                                 17 25'Saldo C/D'
+     A            SALDO         10Y 2O 17 42DSPATR(HI)
+     A                                      EDTCDE(J)
